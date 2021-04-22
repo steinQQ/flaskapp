@@ -20,7 +20,7 @@ handler = WebhookHandler('c30fc0f17ea1a1aac29d4dfc8039f9ee')
 
 # 接收 LINE 的資訊
 @app.route("/callback", methods=['POST'])
-def callback():
+def callback ():
     signature = request.headers['X-Line-Signature']
 
     body = request.get_data(as_text=True)
@@ -34,9 +34,9 @@ def callback():
 
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
-def pretty_echo(event):
-    message = TextSendMessage(text = event.message.text)
-    line_bot_api_reply_message(event.reply_token,message)
+def handle_message(event):
+    message = TextSendMessage(text=event.message.text)
+    line_bot_api.reply_message(event.reply_token,message)
 
 if __name__ == "__main__":
     app.run()
